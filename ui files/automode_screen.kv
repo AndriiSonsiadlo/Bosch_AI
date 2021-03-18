@@ -1,0 +1,263 @@
+#Copyright (C) 2020 BardzoFajnyZespol
+
+#: import ew kivy.uix.effectwidget
+
+#Automatic mode layout
+<AutoMode>:
+    name: "auto"
+
+    #frame surrounding the workspace
+    BoxLayout:
+        orientation: 'vertical'
+        padding:30,0,30,30
+        canvas.before:
+            Color:
+                rgb: bck_color
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        #mode title
+        BoxLayout:
+            orientation:'horizontal'
+            size_hint_y:None
+            height:40
+            Label:
+                size_hint_x: None
+                width:25
+            Label:
+                text: "Automatic mode"
+                font_name: font_regular
+                font_size: '18sp'
+                color: header_text_color
+                size_hint_y: None
+                size_hint_x: None
+                height:40
+                halign:"left"
+                valign:"center"
+
+        GridLayout:
+            size:self.parent.size
+            padding:20
+            cols:2
+
+            #workspace background
+            canvas.before:
+                Color:
+                    rgb: workspace_bck_color
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            BoxLayout:
+                spacing:10
+                orientation:'vertical'
+                padding:0,0,20,0
+
+                BoxLayout:
+                    orientation:'vertical'
+                    size_hint_y:None
+                    height:200
+                    BoxLayout:
+                        orientation:'horizontal'
+
+                        Label:
+                            text: "Connection"
+                            halign:"left"
+                            text_size: self.size
+                            size_hint_x:None
+                            width:90
+                            font_name: font_light
+                            color: header_text_color
+                        BoxLayout:
+                            orientation: 'vertical'
+                            Label:
+                            Label:
+                                id: connection_status
+                                col: .7,.7,.7,1
+                                size_hint_x:None
+                                width:12
+                                size_hint_y:None
+                                height: self.width
+                                halign:"left"
+                                valign: "center"
+                                canvas:
+                                    Color:
+                                        rgb: self.col
+                                    Ellipse:
+                                        pos: self.pos
+                                        size: self.size
+                            Label:
+
+                    BoxLayout:
+                        orientation:'horizontal'
+                        Label:
+                            text: "Server: "
+                            halign:"left"
+                            text_size: self.size
+                            font_name: font_light
+                            color: normal_text_color
+                            size_hint_x:None
+                            width:60
+                        Label:
+                            id: server_ip
+                            text: "Disconnected" #MQTT server IP address
+                            halign:"left"
+                            text_size: self.size
+                            font_name: font_light
+                            color: normal_text_color
+                    Label:
+                    Label:
+                        text: "Part Number:"
+                        halign:"left"
+                        text_size: self.size
+                        font_name: font_light
+                        color: header_text_color
+                    Label:
+                        id: part_number
+                        text: "None" #device part number
+                        halign:"left"
+                        text_size: self.size
+                        font_name: font_light
+                        color: normal_text_color
+                    Label:
+                    Label:
+                        text: "Learning model:"
+                        halign:"left"
+                        text_size: self.size
+                        font_name: font_light
+                        color: header_text_color
+
+                    Label:
+                        id: learning_model
+                        text: "None" #current learning model filename
+                        halign:"left"
+                        text_size: self.size
+                        font_name: font_light
+                        color: normal_text_color
+
+                    Label:
+
+                    BoxLayout:
+                        orientation: 'horizontal'
+                        size_hint_y:2
+                        Label:
+                            size_hint_x:.6
+                        RoundButton:
+                            id: start_button
+                            text: "Start"
+                            text_size: self.size
+                            halign:"center"
+                            valign:"center"
+                            font_name: font_light
+                            color: normal_text_color
+                            on_release:
+                                root.start_fun()
+
+                        Label:
+                            size_hint_x:None
+                            width:20
+
+                        RoundButton:
+                            id: start_button
+                            text: "Stop"
+                            text_size: self.size
+                            halign:"center"
+                            valign:"center"
+                            font_name: font_light
+                            color: normal_text_color
+                            on_release:
+                                root.stop_fun()
+                        Label:
+                            size_hint_x:.6
+
+
+                Label: #space between infos and statistics
+                    size_hint_y:.3
+
+                #statistics area. currently text as a placeholder
+                Label:
+                    size_hint_y:1
+                    text: "Statistics"
+                    font_name: font_light
+                    color: normal_text_color
+                    canvas.before:
+                        Color:
+                            rgba: .5, .5, .5, 1
+                        Line:
+                            width: 1
+                            rectangle: self.x, self.y, self.width, self.height
+
+                RoundButton: #clear statistics button
+                    text: "Clear"
+                    size_hint:None,None
+                    font_size:13
+                    width: 50
+                    height: 20
+
+            BoxLayout:
+                orientation:'vertical'
+
+                #space between button and photo
+                Label:
+                    size_hint_y:None
+                    height:10
+
+            #revieved photo of device
+                Image:
+                    id:photo
+                    source: './Images/not_loaded.jpg'
+                    allow_stretch: True
+                    keep_ratio:True
+                    #height:300
+
+                #photo filename
+                Label:
+                    id:photo_name
+                    text:"no photo loaded"
+                    font_name: font_light
+                    color: normal_text_color
+                    text_size: self.size
+                    font_size:13
+                    halign:"center"
+                    size_hint_y:None
+                    height:20
+
+
+                Label:
+                    size_hint_y:.1
+
+                BoxLayout:
+                    size_hint_y:.1
+
+                    Label:
+                        size_hint_x:.9
+
+                    Label:
+                        text:"Check result: "
+                        font_name: font_light
+                        color: header_text_color
+                        text_size: self.size
+                        font_size: 17
+                        valign:"top"
+                        halign:'right'
+                        size_hint_x:None
+                        width: 110
+
+                     #photo check result: OK/NOK
+                    Label:
+                        id: check_result
+                        text:"N/A"
+                        font_name: font_bold
+                        color: .5,.5,.5,1
+                        text_size: self.size
+                        font_size: 17
+                        valign:"top"
+                        halign:'left'
+                        size_hint_x:None
+                        width: 40
+
+                    Label:
+                        size_hint_x:.9
+
+                Label:
+                    size_hint_y:.1

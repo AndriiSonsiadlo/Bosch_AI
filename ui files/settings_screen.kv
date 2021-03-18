@@ -1,0 +1,335 @@
+#Copyright (C) 2020 BardzoFajnyZespol
+
+#Settings mode layout
+<SettingsScreen>:
+    name: "settings"
+
+    on_pre_enter:
+        root.load_settings_to_inputs('settings.json')
+
+    #frame surrounding the workspace
+    BoxLayout:
+        orientation: 'vertical'
+        padding:30,0,30,30
+        canvas.before:
+            Color:
+                rgb: bck_color
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        #mode title
+        Label:
+            text: "Settings"
+            font_name: font_regular
+            font_size: '18sp'
+            color: header_text_color
+            size_hint_y: None
+            size_hint_x: None
+            height:40
+            halign:"left"
+            valign:"center"
+
+        BoxLayout:
+            padding:20
+            orientation: 'vertical'
+            #workspace background
+            canvas.before:
+                Color:
+                    rgb: workspace_bck_color
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            BoxLayout:
+                orientation: 'horizontal'
+
+                BoxLayout: #connection settigs
+                    id:connection_settings
+                    orientation: 'vertical'
+                    pos_hint: {'top': 1}
+
+                    Label:
+                        text:'Connection'
+                        font_name: font_regular
+                        color: header_text_color
+                        text_size: self.size
+                        valign:'top'
+
+                    BoxLayout:
+                        orientation: 'horizontal'
+                        Label:
+                            text:'Subscriber key: '
+                            font_name: font_light
+                            color: normal_text_color
+                            text_size: self.size
+                            valign:'middle'
+                            halign:'right'
+                            size_hint_y:None
+                            height:30
+                            size_hint_x:None
+                            width:110
+                        CustomInput:
+                            id:sub_key
+                            multiline:False
+                            hint_text:"key"
+                            text_size: self.size
+                            size_hint_x:None
+                            width:140
+                            size_hint_y:None
+                            height:30
+                            valign:'middle'
+                            halign:'left'
+                            color: normal_text_color
+                            font_name: font_light
+                            on_text: root.enable_save()
+
+                    BoxLayout:
+                        orientation: 'horizontal'
+                        Label:
+                            text:'Publisher key: '
+                            font_name: font_light
+                            color: normal_text_color
+                            text_size: self.size
+                            valign:'middle'
+                            halign:'right'
+                            size_hint_y:None
+                            height:30
+                            size_hint_x:None
+                            width:110
+                        CustomInput:
+                            id:pub_key
+                            multiline:False
+                            hint_text:"key"
+                            text_size: self.size
+                            size_hint_x:None
+                            width:240
+                            size_hint_y:None
+                            height:30
+                            valign:'middle'
+                            halign:'left'
+                            color: normal_text_color
+                            font_name: font_light
+                            on_text: root.enable_save()
+
+                    BoxLayout:
+                        orientation: 'horizontal'
+                        Label:
+                            text:'Username: '
+                            font_name: font_light
+                            color: normal_text_color
+                            text_size: self.size
+                            valign:'middle'
+                            halign:'right'
+                            size_hint_y:None
+                            height:30
+                            size_hint_x:None
+                            width:100
+                        CustomInput:
+                            id:username
+                            multiline:False
+                            hint_text:"username"
+                            text_size: self.size
+                            size_hint_x:None
+                            width:140
+                            size_hint_y:None
+                            height:30
+                            valign:'middle'
+                            halign:'left'
+                            color: normal_text_color
+                            font_name: font_light
+                            on_text: root.enable_save()
+
+                    BoxLayout:
+                        orientation: 'horizontal'
+                        Label:
+                            text:'Password: '
+                            font_name: font_light
+                            color: normal_text_color
+                            text_size: self.size
+                            valign:'middle'
+                            halign:'right'
+                            size_hint_y:None
+                            height:30
+                            size_hint_x:None
+                            width:100
+                        CustomInput:
+                            id:password
+                            multiline:False
+                            hint_text:"password"
+                            text_size: self.size
+                            size_hint_x:None
+                            width:140
+                            size_hint_y:None
+                            height:30
+                            valign:'middle'
+                            halign:'left'
+                            color: normal_text_color
+                            font_name: font_light
+                            on_text: root.enable_save()
+
+                    BoxLayout:
+                        orientation: 'horizontal'
+                        Label:
+                            text:'Port number: '
+                            font_name: font_light
+                            color: normal_text_color
+                            text_size: self.size
+                            valign:'middle'
+                            halign:'right'
+                            size_hint_y:None
+                            height:30
+                            size_hint_x:None
+                            width:100
+                        CustomInput:
+                            id:port
+                            multiline:False
+                            hint_text:"port"
+                            text_size: self.size
+                            size_hint_x:None
+                            width:50
+                            size_hint_y:None
+                            height:30
+                            valign:'middle'
+                            halign:'left'
+                            color: normal_text_color
+                            font_name: font_light
+                            on_text: root.enable_save()
+
+                    BoxLayout:
+                        orientation: 'horizontal'
+                        Label:
+                            text:'Server IP address: '
+                            font_name: font_light
+                            color: normal_text_color
+                            text_size: self.size
+                            valign:'middle'
+                            halign:'right'
+                            size_hint_y:None
+                            height:30
+                            size_hint_x:None
+                            width:140
+                        CustomInput:
+                            id:server_ip
+                            multiline:False
+                            hint_text:"ip address"
+                            text_size: self.size
+                            size_hint_x:None
+                            width:140
+                            size_hint_y:None
+                            height:30
+                            valign:'middle'
+                            halign:'left'
+                            on_text: root.enable_save()
+
+                    BoxLayout:
+                        orientation: 'horizontal'
+                        Label:
+                            text:'Reconnect timeout (sec): '
+                            font_name: font_light
+                            color: normal_text_color
+                            text_size: self.size
+                            valign:'middle'
+                            halign:'right'
+                            size_hint_y:None
+                            height:30
+                            size_hint_x:None
+                            width:180
+                        CustomInput:
+                            id:timeout
+                            multiline:False
+                            hint_text:"0"
+                            text_size: self.size
+                            size_hint_x:None
+                            width:50
+                            size_hint_y:None
+                            height:30
+                            input_filter: 'int'
+                            valign:'middle'
+                            halign:'left'
+                            on_text: root.enable_save()
+
+                    Label:
+                        size_hint_y: 1.5
+                Label:
+                    size_hint_x:None
+                    width:150
+
+                BoxLayout:
+                    orientation: 'vertical'
+                    id:other_settings
+                    pos_hint: {'top': 1}
+                    size_hint_y:None
+                    Label:
+                        text:'Other'
+                        font_name: font_regular
+                        color: header_text_color
+                        text_size: self.size
+                        valign:'top'
+                    BoxLayout:
+                        orientation: 'horizontal'
+
+                        Label:
+                            text:'Path: '
+                            font_name: font_light
+                            color: normal_text_color
+                            text_size: self.size
+                            valign:'middle'
+                            halign:'right'
+                            size_hint_y:None
+                            height:35
+                            size_hint_x:None
+                            width:40
+                        CustomInput:
+                            id:path
+                            multiline:False
+                            hint_text:"None selected"
+                            text_size: self.size
+                            size_hint_x:None
+                            width:200
+                            size_hint_y:None
+                            height:35
+                            valign:'middle'
+                            halign:'left'
+                            on_text: root.enable_save()
+                        Label:
+                            size_hint_x:None
+                            width:10
+                        BoxLayout:
+                            orientation:'vertical'
+                            Label:
+                            RoundButton:
+                                id: select_dir_button
+                                size_hint:None,None
+                                height:30
+                                width:self.height
+                                background_normal:''
+                                on_release: root.open_dir_dialog()
+                                Image:
+                                    source: './Images/directory.png'
+                                    center_y: select_dir_button.center_y
+                                    center_x: select_dir_button.center_x
+                                    allow_stretch: True
+                                    height: select_dir_button.width*.5
+                                    width: select_dir_button.width*.4
+                                    opacity:0.5
+                            Label:
+                    Label:
+                        size_hint_y: .8
+
+            BoxLayout:
+                orientation: 'horizontal'
+                size_hint_y:.1
+                Label:
+                RoundButton:
+                    id: save_button
+                    size_hint_x:.4
+                    text: "Apply settings"
+                    text_size: self.size
+                    halign:"center"
+                    valign:"center"
+                    font_name: font_light
+                    color: normal_text_color
+                    on_release:
+                        root.save_settings_to_file()
+                Label:

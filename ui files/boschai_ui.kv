@@ -1,0 +1,216 @@
+#Copyright (C) 2020 BardzoFajnyZespol
+
+#:import NoTransition kivy.uix.screenmanager.NoTransition
+#:import SlideTransition kivy.uix.screenmanager.SlideTransition
+
+#Main Screen with navigation bar on top
+<Main>:
+    manager: manager #manager for changing screens
+    size: root.width, root.height
+    rows: 2 #one row for navigation bar and one for content below it
+
+    #showing naviation bar
+    TabBar:
+        GridLayout:
+            cols:9
+            padding:30,5,10,5
+            spacing:10
+            row_force_default:True
+            row_default_height:40
+            canvas.before:
+                Color:
+                    rgb: 1,1,1,1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            #back button
+            CustButton:
+                id: back_btn
+                size_hint_x: .4
+                #width:40
+                background_normal:''
+                background_down: './Images/pressed.jpg'
+                on_release:
+                    root.manager.current ="learning" if (root.manager.current == "learning_edit" or root.manager.current == "learning_create")  else root.manager.stack.previous_screen()
+                    root.manager.transition.direction = "left"
+                Image:
+                    source: './Images/back_v3.png'
+                    center: self.parent.center
+                    height: self.parent.height-15
+                    allow_stretch: True
+                    opacity:0.5
+                    mipmap:True
+
+            #home button
+            CustButton:
+                id: e_btn
+                size_hint_x: .4
+                #width:40
+                on_release:
+                    root.manager.current = "auto"
+                    root.manager.transition.direction = "right"
+                    root.manager.stack.add_screen(root.manager.current)
+                Image:
+                    source: './Images/home_v3.png'
+                    center: self.parent.center
+                    height: self.parent.height - 15
+                    allow_stretch: True
+                    opacity:0.5
+                    mipmap:True
+
+            #Auto mode button
+            CustButton:
+                id:auto_mode_button
+                text:"Automatic"
+                color: (0,0,0,1) if root.manager.current=="auto" else normal_text_color
+                font_name: font_regular if root.manager.current=="auto" else font_light
+                background_down: './Images/pressed.jpg'
+                on_release:
+                    root.manager.current = "auto"
+                    root.manager.transition.direction = "right"
+                    root.manager.stack.add_screen(root.manager.current)
+                Label:
+                    opacity:1 if root.manager.current=="auto" else 0
+                    canvas:
+                        Color:
+                            rgba: header_text_color
+                        Line:
+                            width: 1.001
+                            points: (auto_mode_button.x,auto_mode_button.y+3,auto_mode_button.x+auto_mode_button.width,auto_mode_button.y+3)
+                            cap:'none'
+
+            #Learning mode button
+            CustButton:
+                id:learning_mode_button
+                text:"Learning"
+                color: (0,0,0,1) if root.manager.current=="learning" else normal_text_color
+                font_name: font_regular if root.manager.current=="learning" else font_light
+                on_release:
+                    root.manager.transition.direction = "left" if root.manager.current == "auto" else "right"
+                    root.manager.current = "learning"
+                    root.manager.stack.add_screen(root.manager.current)
+                Label:
+                    opacity:1 if root.manager.current=="learning" else 0
+                    canvas:
+                        Color:
+                            rgba: header_text_color
+                        Line:
+                            width: 1.001
+                            points: (learning_mode_button.x,learning_mode_button.y+3,learning_mode_button.x+learning_mode_button.width,learning_mode_button.y+3)
+                            cap:'none'
+
+            #Manual mode button
+            CustButton:
+                id:manual_mode_button
+                text:"Manual"
+                color: (0,0,0,1) if root.manager.current=="manual" else normal_text_color
+                font_name: font_regular if root.manager.current=="manual" else font_light
+                on_release:
+                    root.manager.transition.direction = "left" if root.manager.current == "auto" or root.manager.current == "learning" else "right"
+                    root.manager.current = "manual"
+                    root.manager.stack.add_screen(root.manager.current)
+
+                Label:
+                    opacity:1 if root.manager.current=="manual" else 0
+                    canvas:
+                        Color:
+                            rgba: header_text_color
+                        Line:
+                            width: 1.001
+                            points: (manual_mode_button.x,manual_mode_button.y+3,manual_mode_button.x+manual_mode_button.width,manual_mode_button.y+3)
+                            cap:'none'
+
+            Label:
+                size_hint_x:1.5
+
+            #Statistics mode button
+            CustButton:
+                id:stats_mode_button
+                size_hint_x: None
+                width:40
+                on_release:
+                    root.manager.transition.direction = "right" if root.manager.current == "settings" else "left"
+                    root.manager.current = "stats"
+                    root.manager.stack.add_screen(root.manager.current)
+                Image:
+                    source: './Images/stats_3.png'
+                    center: self.parent.center
+                    height: self.parent.height - 12
+                    allow_stretch: False
+                    opacity:1 if root.manager.current=="stats" else .5
+                    mipmap:True
+
+                Label:
+                    opacity:1 if root.manager.current=="stats" else 0
+                    canvas:
+                        Color:
+                            rgba: header_text_color
+                        Line:
+                            width: 1.001
+                            points: (stats_mode_button.x+15,stats_mode_button.y+3,stats_mode_button.x+stats_mode_button.width-15,stats_mode_button.y+3)
+                            cap:'none'
+
+            #Settings mode button
+            CustButton:
+                id:settings_mode_button
+                size_hint_x: None
+                width:40
+                on_release:
+                    root.manager.current = "settings"
+                    root.manager.transition.direction = "left"
+                    root.manager.stack.add_screen(root.manager.current)
+                Image:
+                    source: './Images/setts.png'
+                    center: self.parent.center
+                    height: self.parent.height - 12
+                    allow_stretch: True
+                    opacity:1 if root.manager.current=="settings" else .5
+                    mipmap:True
+
+                Label:
+                    opacity:1 if root.manager.current=="settings" else 0
+                    canvas:
+                        Color:
+                            rgba: header_text_color
+                        Line:
+                            width: 1.001
+                            points: (settings_mode_button.x+15,settings_mode_button.y+3,settings_mode_button.x+settings_mode_button.width-15,settings_mode_button.y+3)
+                            cap:'none'
+
+            #company logo
+            Label:
+                size_hint_x:None
+                width:170
+                Image:
+                    center: self.parent.center
+                    source: './Images/logo.png'
+                    width: self.parent.width-20
+                    mipmap:True
+
+        #colorful divider
+        Label:
+            size_hint_x:None
+            size_hint_y:None
+            height:6
+            width: root.width
+            Image:
+                center: self.parent.center
+                size:self.parent.size
+                source: './Images/divider_2.jpg'
+                allow_stretch: True
+                keep_ratio: False
+
+    #manages changing the screen
+    WindowManager:
+        id: manager
+
+        #screen classes:
+        AutoMode:
+        LearningMode:
+        ManualMode:
+        SettingsScreen:
+        Statistics:
+        LearningEdit:
+        LearningCreate:
+

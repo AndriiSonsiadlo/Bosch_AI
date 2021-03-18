@@ -1,0 +1,393 @@
+#Copyright (C) 2020 BardzoFajnyZespol
+
+#:import Factory kivy.factory.Factory
+
+<LearningMode>:
+    name: "learning"
+    on_pre_enter:
+        root.refresh()
+    #frame surrounding the workspace
+    BoxLayout:
+        orientation: 'vertical'
+        padding:30,0,30,30
+        canvas.before:
+            Color:
+                rgb: bck_color
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        #mode title
+        BoxLayout:
+            orientation:'horizontal'
+            size_hint_y:None
+            height:40
+            Label:
+                size_hint_x: None
+                width:25
+            Label:
+                text: "Learning mode"
+                font_name: font_regular
+                font_size: '18sp'
+                color: header_text_color
+                size_hint_y: None
+                size_hint_x: None
+                height:40
+                halign:"left"
+                valign:"center"
+
+        BoxLayout:
+            padding:20
+            orientation: 'horizontal'
+            #workspace background
+            canvas.before:
+                Color:
+                    rgb: workspace_bck_color
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+
+            BoxLayout:
+                id: learning_infos
+                orientation:'vertical'
+                pos_hint: {'top': 1}
+                size_hint_x:None
+                width:410
+                size_hint_y:.9
+
+                BoxLayout:
+                    orientation: 'horizontal'
+                    Label:
+                        text:"Model name: "
+                        text_size: self.size
+                        halign:'right'
+                        valign:'center'
+                        color: header_text_color
+                        font_name: font_light
+                    Spinner:
+                        id:model_name
+                        text:root.model_name
+                        text_size : self.width, None
+                        halign:'center'
+                        color: normal_text_color
+                        font_name: font_light
+                        background_normal:'./Images/light_grey.jpg'
+                        background_down: './Images/pressed.jpg'
+                        values: root.get_values()
+                        on_text: root.on_spinner_select(model_name.text)
+                        option_cls: Factory.get("MySpinnerOption")
+
+                BoxLayout:
+                    orientation: 'horizontal'
+
+                    Label:
+                        text:"Created: "
+                        text_size: self.size
+                        halign:'right'
+                        color: header_text_color
+                        font_name: font_light
+
+                    Label:
+                        id:created_date
+                        text:root.created
+                        text_size: self.size
+                        halign:'left'
+                        color: normal_text_color
+                        font_name: font_light
+
+                BoxLayout:
+                    orientation: 'horizontal'
+                    Label:
+                        text:"Author: "
+                        text_size: self.size
+                        halign:'right'
+                        color: header_text_color
+                        font_name: font_light
+
+                    Label:
+                        id:author
+                        text:root.author
+                        text_size: self.size
+                        halign:'left'
+                        color: normal_text_color
+                        font_name: font_light
+
+                Label:
+
+
+                BoxLayout:
+                    orientation: 'horizontal'
+                    Label:
+                        text:"Epochs: "
+                        text_size: self.size
+                        halign:'right'
+                        color: header_text_color
+                        font_name: font_light
+
+                    Label:
+                        id:num_iterations
+                        text:"N/A"
+                        text_size: self.size
+                        halign:'left'
+                        color: normal_text_color
+                        font_name: font_light
+
+
+                BoxLayout:
+                    orientation: 'horizontal'
+                    Label:
+                        text:"Batch size: "
+                        text_size: self.size
+                        halign:'right'
+                        color: header_text_color
+                        font_name: font_light
+
+                    Label:
+                        id:batch_size
+                        text:"N/A"
+                        text_size: self.size
+                        halign:'left'
+                        color: normal_text_color
+                        font_name: font_light
+
+                BoxLayout:
+                    orientation: 'horizontal'
+                    Label:
+                        text:"OK photos: "
+                        text_size: self.size
+                        halign:'right'
+                        color: header_text_color
+                        font_name: font_light
+
+                    Label:
+                        id:num_ok
+                        text:"0"
+                        text_size: self.size
+                        halign:'left'
+                        color: normal_text_color
+                        font_name: font_light
+
+                BoxLayout:
+                    orientation: 'horizontal'
+                    Label:
+                        text:"NOK photos: "
+                        text_size: self.size
+                        halign:'right'
+                        color: header_text_color
+                        font_name: font_light
+
+                    Label:
+                        id:num_nok
+                        text:"0"
+                        text_size: self.size
+                        halign:'left'
+                        color: normal_text_color
+                        font_name: font_light
+
+                BoxLayout:
+                    orientation: 'horizontal'
+                    Label:
+                        text:"Threshold: "
+                        text_size: self.size
+                        halign:'right'
+                        color: header_text_color
+                        font_name: font_light
+
+                    Label:
+                        id:threshold
+                        text:"0"
+                        text_size: self.size
+                        halign:'left'
+                        color: normal_text_color
+                        font_name: font_light
+
+                BoxLayout:
+                    orientation: 'horizontal'
+                    Label:
+                        text:"Crop coordinates: "
+                        text_size: self.size
+                        halign:'right'
+                        color: header_text_color
+                        font_name: font_light
+                    Label:
+                        id:crop_xywh
+                        text:"N/A"
+                        text_size: self.size
+                        halign:'left'
+                        color: normal_text_color
+                        font_name: font_light
+
+                Label:
+
+
+                BoxLayout:
+                    orientation: 'horizontal'
+                    Label:
+                        id: ok_sample_header
+                        text:"OK sample: "
+                        text_size: self.size
+                        halign:'right'
+                        color: header_text_color
+                        font_name: font_light
+                    Label:
+                        opacity:0 #showing photo name may be redundant
+                        id:sample_name
+                        text:"123.jpg"
+                        text_size: self.size
+                        halign:'left'
+                        color: normal_text_color
+                        font_name: font_light
+
+                Image:
+                    id:photo
+                    source: './Images/photo.jpg'
+                    allow_stretch: True
+                    halign:'right'
+                    pos_hint: {'top': 1}
+                    size_hint_y:4
+                    keep_ratio:True
+
+                Label:
+                    text:"Description: "
+                    text_size: self.size
+                    size_hint_x:None
+                    width:140
+                    halign:'left'
+                    size_hint_y:None
+                    height:25
+                    color: header_text_color
+                    font_name: font_light
+                    opacity:1 if comment.opacity==1 else 0
+
+                Label:
+                    id: comment
+                    text: root.comment
+                    opacity:0
+                    color: normal_text_color
+                    font_name: font_light
+                    text_size: self.size
+                    halign:'left'
+                    valign:'top'
+                    color: normal_text_color
+                    size_hint_x:2.6
+
+            Label:
+                size_hint_x:None
+                width:30
+            RoundButton:
+                id:delete_btn
+                disabled:True
+                size_hint_y:.14
+                size_hint_x:.3
+                pos_hint: {'top': 1}
+                opacity:.5
+                on_release:
+                    root.show_popup()
+                Label:
+                    id:delete_btn_text
+                    center_y: self.parent.center_y*1.03
+                    center_x: self.parent.center_x
+                    color: normal_text_color
+                    font_name: font_light
+                    font_size: '13sp'
+                    text:"Delete"
+                    disabled_color: normal_text_color
+                Image:
+                    source: './Images/delet_this.png'
+                    center_y: delete_btn_text.center_y/1.05
+                    center_x: delete_btn_text.center_x
+                    size_hint_y:None
+                    height: 22
+                    allow_stretch: True
+                    opacity:0.5
+
+            Label:
+                size_hint_x:None
+                width:10
+
+            RoundButton:
+                id:edit_btn
+                disabled:True
+                size_hint_y:.14
+                size_hint_x:.3
+                pos_hint: {'top': 1}
+                opacity:.5
+                on_release:
+                    root.manager.transition.direction = "right"
+                    root.manager.current = "learning_edit"
+                Label:
+                    id:edit_btn_text
+                    center_y: self.parent.center_y*1.03
+                    center_x: self.parent.center_x
+                    color: normal_text_color
+                    font_name: font_light
+                    font_size: '13sp'
+                    text:"Edit"
+                    disabled_color: normal_text_color
+
+                Image:
+                    source: './Images/editv2.png'
+                    center_y: edit_btn_text.center_y/1.05
+                    center_x: edit_btn_text.center_x
+                    size_hint_y:None
+                    height: 20
+                    allow_stretch: True
+                    opacity:0.5
+
+            Label:
+                size_hint_x:.1
+
+            RoundButton:
+                id:create_btn
+                size_hint_y:.14
+                size_hint_x:.7
+                pos_hint: {'top': 1}
+                on_release:
+                    root.manager.transition.direction = "right"
+                    root.manager.current = "learning_create"
+                Label:
+                    id:create_btn_text
+                    center_y: self.parent.center_y*1.03
+                    center_x: self.parent.center_x
+                    color: normal_text_color
+                    font_name: font_light
+                    font_size: '13sp'
+                    text:"Create new"
+
+                Image:
+                    source: './Images/add.png'
+                    center_y: create_btn_text.center_y/1.05
+                    center_x: create_btn_text.center_x
+                    size_hint_y:None
+                    height: 20
+                    allow_stretch: True
+                    opacity:0.5
+
+            #Label:
+                #text:"GPU: "
+                #text_size: self.size
+                #size_hint_x:None
+                #width:50
+                #font_size: '13sp'
+                #halign:'right'
+                #valign:'top'
+                #color: header_text_color
+                #font_name: font_light
+
+            #Label:
+                #id:gpu_name
+                #size_hint_x:.6
+                #text:"No detected"
+                #font_size: '13sp'
+                #text_size: self.size
+                #valign:'top'
+                #halign:'left'
+                #size_hint_x:None
+                #color: normal_text_color
+                #font_name: font_light
+
+
+
+
+

@@ -1,0 +1,30 @@
+#Copyright (C) 2020 BardzoFajnyZespol
+
+<YesButton@Button>
+    background_color:0,0,0,0
+    font_name: font_light
+    color: 1,1,1,1
+    canvas.before:
+        Color:
+            rgb: nok_text_color if self.state == 'normal' else (.9, .9, .9, 1)
+        RoundedRectangle:
+            size: (self.size)
+            pos: (self.pos)
+            radius: [10, ]
+
+
+<PlotPopup>:
+    size_hint: .6, .6
+    background: ''
+    background_color: 0,0,0,.5
+    BoxLayout:
+        Button:
+            background_color:0,0,0,0
+            on_press: root.close()
+            size: self.parent.size
+            Image:
+                id: plot
+                size: self.parent.size
+                pos: self.parent.pos
+                allow_stretch:True
+                keep_ratio:False

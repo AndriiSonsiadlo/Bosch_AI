@@ -1,0 +1,250 @@
+#Copyright (C) 2020 BardzoFajnyZespol
+
+<LearningEdit>:
+    name:"learning_edit"
+    on_pre_enter:
+        root.load_list()
+        root.clear_inputs()
+        root.show_selected()
+    #frame surrounding the workspace
+    BoxLayout:
+        orientation: 'vertical'
+        padding:30,0,30,30
+        canvas.before:
+            Color:
+                rgb: bck_color
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        #mode title
+        BoxLayout:
+            orientation:'horizontal'
+            size_hint_y:None
+            height:40
+            Label:
+                size_hint_x: None
+                width:25
+            Label:
+                text: "Editing model"
+                font_name: font_regular
+                font_size: '18sp'
+                color: header_text_color
+                size_hint_y: None
+                size_hint_x: None
+                height:40
+                halign:"left"
+                valign:"center"
+
+
+        BoxLayout:
+            padding:20
+            orientation: 'horizontal'
+            #workspace background
+            canvas.before:
+                Color:
+                    rgb: workspace_bck_color
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            BoxLayout:
+                id: learning_infos
+                pos_hint: {'top': 1}
+                orientation:'vertical'
+                size_hint_y:.6
+                size_hint_x:3
+
+
+                BoxLayout:
+                    orientation: 'horizontal'
+                    Label:
+                        text:"Model name: "
+                        text_size: self.size
+                        valign:'middle'
+                        halign:'right'
+                        color: header_text_color
+                        font_name: font_light
+
+                    CustomInput:
+                        id:model_name
+                        hint_text:"model name"
+                        text_size: self.size
+                        valign:'middle'
+                        halign:'left'
+                        color: normal_text_color
+                        font_name: font_light
+
+                BoxLayout:
+                    orientation: 'horizontal'
+                    Label:
+                        text:"Created: "
+                        text_size: self.size
+                        valign:'middle'
+                        halign:'right'
+                        color: header_text_color
+                        font_name: font_light
+
+                    Label:
+                        id:created_date
+                        text:"Date"
+                        text_size: self.size
+                        valign:'middle'
+                        halign:'left'
+                        color: normal_text_color
+                        font_name: font_light
+
+                BoxLayout:
+                    orientation: 'horizontal'
+                    Label:
+                        text:"Author: "
+                        text_size: self.size
+                        valign:'middle'
+                        halign:'right'
+                        color: header_text_color
+                        font_name: font_light
+                    Label:
+                        id:author
+                        multiline:False
+                        text:"None"
+                        text_size: self.size
+                        valign:'middle'
+                        halign:'left'
+                        color: normal_text_color
+                        font_name: font_light
+
+                BoxLayout:
+                    orientation: 'horizontal'
+                    Label:
+                        text:"Description: "
+                        text_size: self.size
+                        valign:'middle'
+                        halign:'right'
+                        color: header_text_color
+                        font_name: font_light
+                        size_hint_x:None
+                        width: threshold_header.width
+
+                    CustomInput:
+                        id: description
+                        hint_text:"description"
+                        size_hint_x:1
+                        text_size: self.size
+                        valign:'middle'
+                        halign:'left'
+                        color: normal_text_color
+                        font_name: font_light
+                    Label:
+                        size_hint_x:None
+                        width:10
+                    BoxLayout:
+                        id:delete_button_box
+                        orientation: 'vertical'
+                        size_hint_x:None
+                        width: self.height
+                        Label:
+                            size_hint_y:.2
+                        RoundButton:
+                            id:delete_desc_button
+                            size_hint_x:None
+                            width:self.height
+                            on_release: root.delete_description()
+                            Image:
+                                source: './Images/delet_this.png'
+                                center_y: delete_desc_button.center_y
+                                center_x: delete_desc_button.center_x
+                                allow_stretch: True
+                                width: delete_button_box.height*.5
+                                opacity:0.5
+                        Label:
+                            size_hint_y:.2
+
+                BoxLayout:
+                    orientation: 'horizontal'
+                    Label:
+                        id: threshold_header
+                        text:"Threshold: "
+                        text_size: self.size
+                        valign:'middle'
+                        halign:'right'
+                        color: header_text_color
+                        font_name: font_light
+                    Label:
+                        id:threshold
+                        text_size: self.size
+                        valign:'middle'
+                        halign:'left'
+                        color: normal_text_color
+                        font_name: font_light
+
+                BoxLayout:
+                    orientation: 'horizontal'
+
+                    Label:
+                        text:"Manual Threshold: "
+                        size_hint_x:None
+                        width: threshold_header.width
+                        text_size: self.size
+                        valign:'middle'
+                        halign:'right'
+                        color: header_text_color
+                        font_name: font_light
+                    CustomInput:
+                        id:threshold_manual
+                        disabled:True
+                        input_filter: 'float'
+                        hint_text:"disabled" if manual_checkbox.active == False else "0"
+                        text_size: self.size
+                        valign:'middle'
+                        halign:'left'
+                        color: normal_text_color
+                        font_name: font_light
+                        size_hint_x:None
+                        width:80
+                    CustomCheckbox:
+                        id: manual_checkbox
+                        active:False
+                        size_hint_x:None
+                        width:40
+                        on_active: root.enable_input(self.active)
+
+                BoxLayout:
+                    orientation: 'horizontal'
+
+                    Label:
+                        text:"Use in Automatic Mode: "
+                        size_hint_x:None
+                        width: threshold_header.width
+                        text_size: self.size
+                        valign:'middle'
+                        halign:'right'
+                        color: header_text_color
+                        font_name: font_light
+                    CustomCheckbox:
+                        id: automode_checkbox
+                        active:False
+                        size_hint_x:None
+                        width:40
+                        on_active:
+
+
+            BoxLayout:
+                #layout for having save button in the centre
+                orientation:'horizontal'
+                Label:
+                RoundButton:
+                    size_hint_y:None
+                    size_hint_x:None
+                    width:100
+                    height:40
+                    pos_hint: {'top': 1}
+                    text:"Save"
+                    color: normal_text_color
+                    font_name: font_light
+                    on_release:
+                        root.save_edited_model()
+                        root.manager.transition.direction = "left"
+                        root.manager.current = "learning"
+                Label:
+
+

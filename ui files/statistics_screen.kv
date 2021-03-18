@@ -1,0 +1,55 @@
+#Copyright (C) 2020 BardzoFajnyZespol
+
+#Statistics mode layout
+<Statistics>:
+    name: "stats"
+    on_pre_enter:
+        root.data_to_file_generator()
+        root.chart()
+        root.update_left_plot('./Images/average.png')
+        root.update_right_plot('./Images/timings&NOK.png')
+
+    #frame surrounding the workspace
+    BoxLayout:
+        orientation: 'vertical'
+        padding:30,0,30,30
+        canvas.before:
+            Color:
+                rgb: bck_color
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        BoxLayout:
+            orientation:'horizontal'
+            size_hint_y:None
+            height:40
+            Label:
+                size_hint_x: None
+                width:25
+            Label:
+                text: "Statistics"
+                font_name: font_regular
+                font_size: '18sp'
+                color: header_text_color
+                size_hint_y: None
+                size_hint_x: None
+                height:40
+                halign:"left"
+                valign:"center"
+
+        BoxLayout:
+            padding:20
+            orientation: 'horizontal'
+
+            #workspace background
+            canvas.before:
+                Color:
+                    rgb: workspace_bck_color
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            Image:
+                id: left_plot
+            Image:
+                id: right_plot

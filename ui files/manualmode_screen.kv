@@ -1,0 +1,458 @@
+#Copyright (C) 2020 BardzoFajnyZespol
+
+#Manual mode layout
+<ManualMode>:
+    name: "manual"
+
+    on_pre_enter:
+        root.refresh()
+
+    #frame surrounding the workspace
+    BoxLayout:
+        orientation: 'vertical'
+        padding:30,0,30,30
+        canvas.before:
+            Color:
+                rgb: bck_color
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        #mode title
+        BoxLayout:
+            orientation:'horizontal'
+            size_hint_y:None
+            height:40
+            Label:
+                size_hint_x: None
+                width:25
+            Label:
+                text: "Manual mode"
+                font_name: font_regular
+                font_size: '18sp'
+                color: header_text_color
+                size_hint_y: None
+                size_hint_x: None
+                height:40
+                halign:"left"
+                valign:"center"
+
+        BoxLayout:
+            padding:20
+            orientation: 'horizontal'
+
+            #workspace background
+            canvas.before:
+                Color:
+                    rgb: workspace_bck_color
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+
+            BoxLayout:
+                id: learning_infos
+                orientation:'vertical'
+                size_hint_x:None
+                width:410
+                size_hint_y:.9
+                pos_hint: {'top': 1}
+
+                BoxLayout:
+                    orientation: 'horizontal'
+                    Label:
+                        text:"Model name: "
+                        text_size: self.size
+                        halign:'right'
+                        valign:'center'
+                        color: header_text_color
+                        font_name: font_light
+                    Spinner:
+                        id:model_name
+                        text:root.model_name
+                        text_size : self.width, None
+                        halign:'center'
+                        color: normal_text_color
+                        font_name: font_light
+                        background_normal:'./Images/light_grey.jpg'
+                        background_down: './Images/pressed.jpg'
+                        values: root.get_values()
+                        on_text: root.on_spinner_select(model_name.text)
+                        option_cls: Factory.get("MySpinnerOption")
+
+
+                BoxLayout:
+                    orientation: 'horizontal'
+                    Label:
+                        text:"Created: "
+                        text_size: self.size
+                        halign:'right'
+                        color: header_text_color
+                        font_name: font_light
+
+                    Label:
+                        id:created_date
+                        text:root.created
+                        text_size: self.size
+                        halign:'left'
+                        color: normal_text_color
+                        font_name: font_light
+
+                BoxLayout:
+                    orientation: 'horizontal'
+                    Label:
+                        text:"Author: "
+                        text_size: self.size
+                        halign:'right'
+                        color: header_text_color
+                        font_name: font_light
+
+                    Label:
+                        id:author
+                        text:root.author
+                        text_size: self.size
+                        halign:'left'
+                        color: normal_text_color
+                        font_name: font_light
+
+                Label:
+
+                BoxLayout:
+                    orientation: 'horizontal'
+                    Label:
+                        text:"Epochs: "
+                        text_size: self.size
+                        halign:'right'
+                        color: header_text_color
+                        font_name: font_light
+
+                    Label:
+                        id:num_iterations
+                        text:"7"
+                        text_size: self.size
+                        halign:'left'
+                        color: normal_text_color
+                        font_name: font_light
+
+
+                BoxLayout:
+                    orientation: 'horizontal'
+                    Label:
+                        text:"Batch size: "
+                        text_size: self.size
+                        halign:'right'
+                        color: header_text_color
+                        font_name: font_light
+
+                    Label:
+                        id:batch_size
+                        text:"N/A"
+                        text_size: self.size
+                        halign:'left'
+                        color: normal_text_color
+                        font_name: font_light
+
+
+                BoxLayout:
+                    orientation: 'horizontal'
+                    Label:
+                        text:"OK photos: "
+                        text_size: self.size
+                        halign:'right'
+                        color: header_text_color
+                        font_name: font_light
+
+                    Label:
+                        id:num_ok
+                        text:"0"
+                        text_size: self.size
+                        halign:'left'
+                        color: normal_text_color
+                        font_name: font_light
+
+                BoxLayout:
+                    orientation: 'horizontal'
+                    Label:
+                        text:"NOK photos: "
+                        text_size: self.size
+                        halign:'right'
+                        color: header_text_color
+                        font_name: font_light
+
+                    Label:
+                        id:num_nok
+                        text:"0"
+                        text_size: self.size
+                        halign:'left'
+                        color: normal_text_color
+                        font_name: font_light
+
+                BoxLayout:
+                    orientation: 'horizontal'
+                    Label:
+                        text:"Threshold: "
+                        text_size: self.size
+                        halign:'right'
+                        color: header_text_color
+                        font_name: font_light
+
+                    Label:
+                        id:threshold
+                        text:"0"
+                        text_size: self.size
+                        halign:'left'
+                        color: normal_text_color
+                        font_name: font_light
+                BoxLayout:
+                    orientation: 'horizontal'
+                    Label:
+                        text:"Crop coordinates: "
+                        text_size: self.size
+                        halign:'right'
+                        color: header_text_color
+                        font_name: font_light
+                    Label:
+                        id:crop_xywh
+                        text:"N/A"
+                        text_size: self.size
+                        halign:'left'
+                        color: normal_text_color
+                        font_name: font_light
+
+
+                Label:
+
+                BoxLayout:
+                    orientation: 'horizontal'
+                    Label:
+                        id: ok_sample_header
+                        text:"OK sample: "
+                        text_size: self.size
+                        halign:'right'
+                        color: header_text_color
+                        font_name: font_light
+
+                    Label:
+                        id:sample_name
+                        opacity:0
+                        text:"123.jpg"
+                        text_size: self.size
+                        halign:'left'
+                        color: normal_text_color
+                        font_name: font_light
+
+
+
+                Image:
+                    id:photo
+                    source: './Images/photo.jpg'
+                    allow_stretch: True
+                    halign:'right'
+                    pos_hint: {'top': 1}
+                    size_hint_y:4
+                    keep_ratio:True
+
+                Label:
+                    text:"Description: "
+                    text_size: self.size
+                    size_hint_x:None
+                    width:140
+                    halign:'left'
+                    size_hint_y:None
+                    height:25
+                    color: header_text_color
+                    font_name: font_light
+                    opacity:1 if comment.opacity==1 else 0
+
+                Label:
+                    id: comment
+                    text: root.comment
+                    opacity:0
+                    color: normal_text_color
+                    font_name: font_light
+                    text_size: self.size
+                    halign:'left'
+                    valign:'top'
+                    color: normal_text_color
+                    size_hint_x:2.6
+
+
+            BoxLayout:
+                orientation:'vertical'
+
+                BoxLayout:
+                    orientation:'horizontal'
+                    size_hint_y:.14
+                    Label:
+                        size_hint_x:1
+                    RoundButton:
+                        id:import_btn
+
+                        pos_hint: {'top': 1}
+
+                        on_release:
+                            root.open_file_dialog()
+
+                        Label:
+                            id:create_btn_text
+                            center_y: self.parent.center_y*1.03
+                            center_x: self.parent.center_x
+                            color: normal_text_color
+                            font_name: font_light
+                            font_size: '13sp'
+                            text:"Import photos"
+                            disabled_color: normal_text_color
+                        Label:
+                            id: num_files
+                            center_y: self.parent.center_y-10
+                            center_x: self.parent.center_x
+                            color: normal_text_color
+                            font_name: font_light
+                            font_size: '13sp'
+                            text:"0 loaded"
+                            opacity: 0
+                        Image:
+                            id: dir_icon
+                            source: './Images/directory.png'
+                            center_y: create_btn_text.center_y/1.05
+                            center_x: create_btn_text.center_x
+                            size_hint_y:None
+                            height: 20
+                            allow_stretch: True
+                            opacity:0.5
+                            mipmap:True
+                    Label:
+                        size_hint_x:1
+
+                BoxLayout: #photo preview boxlayout
+                    id: photo_preview_box
+                    orientation:'vertical'
+
+                    Label:
+                        size_hint_y:None
+                        height:10
+                    Image:
+                        id:preview_photo
+                        source: './Images/photo.jpg'
+                        allow_stretch: True
+                        #size_hint_y:None
+                        keep_ratio:True
+                        #height:100
+                    Label:
+                        id:preview_photo_name
+                        size_hint_y:None
+                        height:30
+                        text:'123.jpg (1/24)'
+                        color: normal_text_color
+                        font_name: font_light
+                        text_size: self.size
+                        halign:'center'
+                        valign:'center'
+                        center_y: preview_photo.center_y-preview_photo.height/2 + 35
+                        center_x: preview_photo.center_x
+                        font_size: '13sp'
+
+                    Label:
+                        id: photo_threshold
+                        text:'Threshold: 0'
+                        color: normal_text_color
+                        font_name: font_light
+                        text_size: self.size
+                        font_size: '12sp'
+                        halign:'center'
+                        valign:'top'
+                        size_hint_y:None
+                        height:20
+
+                    BoxLayout: #next/previous photo button box
+                        orientation: 'horizontal'
+                        size_hint_y:None
+                        height:40
+                        BoxLayout: #ok and nok results box
+                            orientation: 'vertical'
+                            BoxLayout: #number of ok photos box
+                                orientation: 'horizontal'
+                                Label:
+                                    text:'OK: '
+                                    color: ok_text_color
+                                    font_name: font_light
+                                    text_size: self.size
+                                    halign:'right'
+                                Label:
+                                    id: preview_ok_number
+                                    text:'0'
+                                    color: normal_text_color
+                                    font_name: font_light
+                                    text_size: self.size
+                                    halign:'left'
+
+                            BoxLayout: #number of nok photos box
+                                orientation: 'horizontal'
+                                Label:
+                                    text:'NOK: '
+                                    color: nok_text_color
+                                    font_name: font_light
+                                    text_size: self.size
+                                    halign:'right'
+                                Label:
+                                    id: preview_nok_number
+                                    text:'0'
+                                    color: normal_text_color
+                                    font_name: font_light
+                                    text_size: self.size
+                                    halign:'left'
+
+                        RoundButton:
+                            id: previous_photo_btn
+                            text:"<"
+                            size_hint_x:.25
+                            size_hint_y:None
+                            height:30
+                            pos_hint: {'top': 1}
+                            on_release:
+                                root.previous_image()
+                        Label:
+                            size_hint_x:None
+                            width:10
+                        RoundButton:
+                            id: next_photo_btn
+                            text:">"
+                            size_hint_x:.25
+                            size_hint_y:None
+                            height:30
+                            pos_hint: {'top': 1}
+                            on_release:
+                                root.next_image()
+                        Label:
+
+                    BoxLayout: #check result box
+                        orientation:'horizontal'
+                        size_hint_y:None
+                        height:40
+
+                        Label:
+                            size_hint_x:1
+
+                        Label:
+                            text:'Check result: '
+                            size_hint_x:None
+                            width:100
+                            color: header_text_color
+                            font_name: font_light
+                            text_size: self.size
+                            halign:'center'
+                            valign:'center'
+
+                        Label:
+                            size_hint_x:None
+                            width:40
+                            id: preview_result
+                            text:'OK'
+                            color: ok_text_color
+                            font_name: font_bold
+                            text_size: self.size
+                            halign:'center'
+                            valign:'center'
+
+                        Label:
+                            size_hint_x:1

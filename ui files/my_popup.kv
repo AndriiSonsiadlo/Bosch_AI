@@ -1,0 +1,54 @@
+#Copyright (C) 2020 BardzoFajnyZespol
+
+<YesButton@Button>
+    background_color:0,0,0,0
+    font_name: font_light
+    color: 1,1,1,1
+    canvas.before:
+        Color:
+            rgb: nok_text_color if self.state == 'normal' else (.9, .9, .9, 1)
+        RoundedRectangle:
+            size: (self.size)
+            pos: (self.pos)
+            radius: [10, ]
+
+
+<MyPopup>:
+    title_font: font_regular
+    title_color: normal_text_color
+    size_hint: None, None
+    size: 400, 120
+    background: './Images/pressed.jpg'
+    separator_color: header_text_color
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            size_hint_y:.2
+        BoxLayout:
+            orientation: 'horizontal'
+            Label:
+                size_hint_x:.4
+            YesButton:
+                id: yes_button
+                text:"Yes"
+                size_hint:None,None
+                font_size: '14dp'
+                height:30
+                width:80
+                background_normal:'./Images/red.jpg'
+                on_release: root.yes_pressed()
+            Label:
+                size_hint_x:.1
+
+            RoundButton:
+                id: no_button
+                text:"No"
+                size_hint:None,None
+                font_size: '14dp'
+                height:30
+                width:80
+                on_release: root.no_pressed()
+            Label:
+                size_hint_x:.4
+        Label:
+            size_hint_y:.2

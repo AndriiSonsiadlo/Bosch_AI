@@ -1,0 +1,173 @@
+#Copyright (C) 2020 BardzoFajnyZespol
+
+#FIRST VERSION OF APP LAYOUT. NOT IN USE!
+
+#:set workspace_bck_color (1,1,1)
+#:set bck_color (231/255,231/255,233/255)
+#:set normal_text_color (0.2,0.2,0.2,1)
+#:set header_text_color (97/255,116/255,178/255,1)
+#:set font_regular './Fonts/Bosch Sans Light'
+#:set font_bold './Fonts/Bosch Sans Regular'
+#: import ew kivy.uix.effectwidget
+
+<MyGrid>
+    name: home_btn
+    workspace_bck_color: 0,0,0,0
+    GridLayout:
+        size: root.width, root.height
+        cols:1
+        GridLayout:
+            size_hint_y: None
+            height: self.minimum_height
+            padding:30,5,10,5
+            spacing:10
+            cols:9
+            row_force_default:True
+            row_default_height:40
+            canvas.before:
+                Color:
+                    rgb: workspace_bck_color
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            Button:
+                id: back_btn
+                size_hint_x: None
+                width:40
+                background_normal:''
+                background_down: './Images/pressed.jpg'
+                Image:
+                    source: './Images/back_v3.png'
+                    center: self.parent.center
+                    height: self.parent.height-12
+                    allow_stretch: True
+                    opacity:0.5
+                    mipmap:True
+
+            Button:
+                id: home_btn
+                size_hint_x: None
+                width:40
+                on_press:root.btn()
+                background_normal:''
+                background_down: './Images/pressed.jpg'
+                Image:
+                    source: './Images/home_v3.png'
+                    center: self.parent.center
+                    height: self.parent.height - 12
+                    allow_stretch: True
+                    opacity:0.5
+                    mipmap:True
+
+            Button:
+                text:"Automatic"
+                font_name: font_regular
+                color: normal_text_color
+                background_normal:''
+                background_down: './Images/pressed.jpg'
+
+            Button:
+                text:"Learning"
+                font_name: font_regular
+                color: normal_text_color
+                background_normal:''
+                background_down: './Images/pressed.jpg'
+            Button:
+                text:"Manual"
+                font_name: font_regular
+                color: normal_text_color
+                background_normal:''
+                background_down: './Images/pressed.jpg'
+
+            Label:
+                size_hint_x:1.5
+
+            Button:
+                size_hint_x: None
+                width:40
+                background_normal:''
+                background_down: './Images/pressed.jpg'
+                Image:
+                    source: './Images/stats_3.png'
+                    center: self.parent.center
+                    height: self.parent.height - 17
+                    allow_stretch: False
+                    opacity:0.5
+                    mipmap:True
+
+            Button:
+                size_hint_x: None
+                width:40
+                background_normal:''
+                background_down: './Images/pressed.jpg'
+                Image:
+                    source: './Images/setts.png'
+                    center: self.parent.center
+                    height: self.parent.height - 17
+                    allow_stretch: True
+                    opacity:0.5
+                    mipmap:True
+
+            Label:
+                size_hint_x:None
+                width:170
+                Image:
+                    center: self.parent.center
+                    source: './Images/logo.png'
+                    width: self.parent.width-20
+                    mipmap:True
+
+        Label:
+            size: root.width,6
+            size_hint_y:None
+            Image:
+                center: self.parent.center
+                size:self.parent.size
+                source: './Images/divider_2.jpg'
+                allow_stretch: True
+                keep_ratio: False
+
+
+        BoxLayout:
+            orientation: 'vertical'
+            padding:30,0,30,30
+            canvas.before:
+                Color:
+                    rgb: bck_color
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            Label:
+                text: "            Automatic mode"
+                font_name: font_bold
+                font_size: '18sp'
+                color: header_text_color
+                size_hint_y: None
+                size_hint_x: None
+                height:40
+                halign:"left"
+                valign:"center"
+
+            GridLayout:
+                padding:20
+                cols:2
+                canvas.before:
+                    Color:
+                        rgb: workspace_bck_color
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+                GridLayout:
+                    cols:1
+                    Label:
+                        text: "Connection"
+                        font_name: font_regular
+                        color: normal_text_color
+                    Label:
+                        text: "Rzeczy"
+                        font_name: font_regular
+                        color: normal_text_color
+                Image:
+                    source: './Images/photo.jpg'
+
